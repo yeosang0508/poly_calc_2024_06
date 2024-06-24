@@ -9,16 +9,13 @@ public class Calc {
 
         String[] bits = exp.split(" \\+ ");
 
-        int a = Integer.parseInt(bits[0]);
-        int b = Integer.parseInt(bits[1]);
-        int c = 0;
+        int sum = 0;
 
-        if (bits.length > 2) {
-            c = Integer.parseInt(bits[2]);
+        for(int i = 0; i < bits.length; i++) {
+            sum += Integer.parseInt(bits[i]);
         }
 
-
-        return a + b + c;
+        return sum;
 
 //        throw new RuntimeException("해석 불가 : 올바른 계산식이 아니야");
     }
