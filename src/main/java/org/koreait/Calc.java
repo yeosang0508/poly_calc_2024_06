@@ -10,9 +10,8 @@ public class Calc {
         if (!exp.contains(" ")) {
             return Integer.parseInt(exp);
         }
-        boolean needToMulti = exp.contains("*");
-        boolean needToPlus = exp.contains("+");
-        boolean needToMinus = exp.contains("-");
+        boolean needToMulti = exp.contains(" * ");
+        boolean needToPlus = exp.contains(" + ") || exp.contains(" - ");
 
         boolean needToCompound = needToMulti && needToPlus;
 
@@ -27,7 +26,7 @@ public class Calc {
             return run(newExp);
         }
 
-        if (needToPlus|| needToMinus) {
+        if (needToPlus) {
             exp = exp.replaceAll("- ", "+ -");
 
             String[] bits = exp.split(" \\+ ");
