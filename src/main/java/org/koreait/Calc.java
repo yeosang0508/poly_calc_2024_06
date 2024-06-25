@@ -57,10 +57,17 @@ public class Calc {
     }
 
     private static String stripOuterBrackets(String exp) {
-        if (exp.charAt(0) == '(' && exp.charAt(exp.length() - 1) == ')') {
-            exp = exp.substring(1, exp.length() - 1);
-        }
-        return exp;
-    }
 
-}
+        int outerBracketsCount = 0;
+
+        while (exp.charAt(outerBracketsCount) == '(' && exp.charAt(exp.length() - 1 - outerBracketsCount) == ')') {
+            outerBracketsCount++;
+        }
+
+            if (outerBracketsCount == 0) return exp;
+
+            return exp.substring(outerBracketsCount, exp.length() - outerBracketsCount);
+        }
+
+
+    }
