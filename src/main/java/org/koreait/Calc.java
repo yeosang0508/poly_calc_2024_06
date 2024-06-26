@@ -24,10 +24,8 @@ public class Calc {
         boolean needToCompound = needToMulti && needToPlus;
 
         if (needToSplit) {
-            int bracketsCount = 0;
-            int splitPointIndex = -1;
             int firstbracket = 0;
-            int secondbracket = 1;
+            int lastbracket = 1;
 
             for (int i = 0; i < exp.length(); i++) {
                 if (exp.charAt(i) == '(') {
@@ -37,7 +35,7 @@ public class Calc {
             }
             for (int i = 0; i < exp.length(); i++) {
                 if (exp.charAt(i) == ')') {
-                    secondbracket = i;
+                    lastbracket = i;
                 }
             }
 
@@ -47,13 +45,19 @@ public class Calc {
 
 
             if (firstbracket != 0) {
+                if(exp.contains("-(")){
+                    exp = exp.replaceAll("-\\(", "(-");
+                    exp = exp.replaceAll(" \\+ ", " + -");
+                    return Calc.run(exp);
+                }
+
                 firstExp = exp.substring(0, firstbracket - 3);
-                secondExp = exp.substring(firstbracket, secondbracket + 1);
+                secondExp = exp.substring(firstbracket, lastbracket + 1);
                 operator = exp.charAt(firstbracket - 2);
             } else {
-                 firstExp = exp.substring(firstbracket, secondbracket + 1);
-                 secondExp = exp.substring(secondbracket + 4);
-                operator = exp.charAt(secondbracket + 2);
+                 firstExp = exp.substring(firstbracket, lastbracket + 1);
+                 secondExp = exp.substring(lastbracket + 4);
+                operator = exp.charAt( lastbracket + 2);
             }
 
 
