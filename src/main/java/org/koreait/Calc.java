@@ -26,37 +26,40 @@ public class Calc {
         if (needToSplit) {
             int bracketsCount = 0;
             int splitPointIndex = -1;
-
-            for(int i = 0; i <exp.length(); i++){
-                if(exp.charAt(i) == '('){
-                    if(i != 0){
-
-                    }
-                }
-            }
+            int firstbracket = 0;
+            int secondbracket = 1;
 
             for (int i = 0; i < exp.length(); i++) {
                 if (exp.charAt(i) == '(') {
-                    bracketsCount++;
-
-
-                } else if (exp.charAt(i) == ')') {
-                    bracketsCount--;
-                }
-                if (bracketsCount == 0) {
-                    splitPointIndex = i;
+                    firstbracket = i;
                     break;
                 }
             }
-            String firstExp = exp.substring(0, splitPointIndex + 1);
-            String secondExp = exp.substring(splitPointIndex + 4);
+            for (int i = 0; i < exp.length(); i++) {
+                if (exp.charAt(i) == ')') {
+                    secondbracket = i;
+                }
+            }
 
-            char operator = exp.charAt(splitPointIndex + 2);
+            String firstExp = "";
+            String secondExp = "";
+            char operator ;
+
+
+            if (firstbracket != 0) {
+                firstExp = exp.substring(0, firstbracket - 3);
+                secondExp = exp.substring(firstbracket, secondbracket + 1);
+                operator = exp.charAt(firstbracket - 2);
+            } else {
+                 firstExp = exp.substring(firstbracket, secondbracket + 1);
+                 secondExp = exp.substring(secondbracket + 4);
+                operator = exp.charAt(secondbracket + 2);
+            }
+
 
             exp = Calc.run(firstExp) + " " + operator + " " + Calc.run(secondExp);
 
             return Calc.run(exp);
-
 
 
         } else if (needToCompound) {
