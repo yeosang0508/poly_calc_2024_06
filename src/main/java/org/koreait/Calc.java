@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class Calc {
     public static int run(String exp) {
         // (20 + 20) + 20
+        exp = exp.trim(); // 양 옆의 쓸데없는 공백 제거
         // 괄호 제거
         exp = stripOuterBrackets(exp);
 
@@ -26,9 +27,19 @@ public class Calc {
             int bracketsCount = 0;
             int splitPointIndex = -1;
 
+            for(int i = 0; i <exp.length(); i++){
+                if(exp.charAt(i) == '('){
+                    if(i != 0){
+
+                    }
+                }
+            }
+
             for (int i = 0; i < exp.length(); i++) {
                 if (exp.charAt(i) == '(') {
                     bracketsCount++;
+
+
                 } else if (exp.charAt(i) == ')') {
                     bracketsCount--;
                 }
@@ -40,11 +51,13 @@ public class Calc {
             String firstExp = exp.substring(0, splitPointIndex + 1);
             String secondExp = exp.substring(splitPointIndex + 4);
 
-            if(needToCompound){
-                return Calc.run(firstExp) * Calc.run(secondExp);
-            }
+            char operator = exp.charAt(splitPointIndex + 2);
 
-            return Calc.run(firstExp) + Calc.run(secondExp);
+            exp = Calc.run(firstExp) + " " + operator + " " + Calc.run(secondExp);
+
+            return Calc.run(exp);
+
+
 
         } else if (needToCompound) {
             String[] bits = exp.split(" \\+ ");
