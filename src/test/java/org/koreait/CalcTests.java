@@ -119,6 +119,7 @@ public class CalcTests {
     void t19() {
         assertThat(Calc.run("(((10 + 20)))")).isEqualTo(30);
     }
+<<<<<<< HEAD
 
     @Test
     @DisplayName("((20 + 20)) + 20 == 60")
@@ -145,4 +146,6 @@ public class CalcTests {
     }
 
 
+=======
+>>>>>>> b46b42a2982ef06fcbe598c4e4004d60cd5850a7
 }

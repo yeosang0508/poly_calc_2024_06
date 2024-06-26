@@ -15,6 +15,7 @@ public class Calc {
         }
         boolean needToMulti = exp.contains(" * ");
         boolean needToPlus = exp.contains(" + ") || exp.contains(" - ");
+<<<<<<< HEAD
         boolean needToSplit = exp.contains("(") || exp.contains(")");
 
         boolean needToCompound = needToMulti && needToPlus;
@@ -40,6 +41,12 @@ public class Calc {
             return Calc.run(firstExp) + Calc.run(secondExp);
 
         } else if (needToCompound) {
+=======
+
+        boolean needToCompound = needToMulti && needToPlus;
+
+        if (needToCompound) {
+>>>>>>> b46b42a2982ef06fcbe598c4e4004d60cd5850a7
             String[] bits = exp.split(" \\+ ");
 
             String newExp = Arrays.stream(bits)
@@ -85,6 +92,7 @@ public class Calc {
             outerBracketsCount++;
         }
 
+<<<<<<< HEAD
         if (outerBracketsCount == 0) return exp;
 
         return exp.substring(outerBracketsCount, exp.length() - outerBracketsCount);
@@ -92,3 +100,12 @@ public class Calc {
 
 
 }
+=======
+            if (outerBracketsCount == 0) return exp;
+
+            return exp.substring(outerBracketsCount, exp.length() - outerBracketsCount);
+        }
+
+
+    }
+>>>>>>> b46b42a2982ef06fcbe598c4e4004d60cd5850a7
