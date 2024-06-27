@@ -45,6 +45,13 @@ public class Calc_my_Tests {
     }
 
 
+    @Test
+    @DisplayName("(1 + 4) == 5")
+    void t7() {
+        assertThat(Calc_my.execute("(1 + 4)")).isEqualTo(5);
+    }
+
+
 
 
 }
