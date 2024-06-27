@@ -38,5 +38,13 @@ public class Calc_my_Tests {
         assertThat(Calc_my.execute("3 * 1 * 4")).isEqualTo(12);
     }
 
+    @Test
+    @DisplayName("4 * 8 + 6 = 38")
+    void t6() {
+        assertThat(Calc_my.execute("4 * 8 + 6")).isEqualTo(38);
+    }
+
+
+
 
 }
