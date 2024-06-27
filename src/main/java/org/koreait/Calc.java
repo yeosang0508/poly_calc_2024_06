@@ -16,23 +16,12 @@ public class Calc {
         exp = stripOuterBrackets(exp);
 
         // 만약에 -( 패턴이라면, 내가 갖고있는 코드는 해석할 수 없으므로 해석할 수 있는 형태로 수정
-        if (isCaseMinusBracket(exp)) {
-
-            int in = isCaseMinusBrackets(exp);
-
-            String minusbracke1 = exp.substring(in + 1, in + 8) + " * -1 ";
-            String operator1 = exp.substring(in + 9, in + 10);
-            String minusbracke2 = exp.substring(in + 10 );
-
-
-            exp = Calc.run(minusbracke1) + " " + operator1 + minusbracke2;
-
-            if(exp.contains("-(")){
-                String n = minusbracke1;
-                return Calc.run(exp);
-            }
-
+        int[] pos = null;
+        while ((pos = findCaseMinusBracket(exp)) != null) {
+            exp = changeMinusBracket(exp, pos[0], pos[1]);
         }
+
+        exp = stripOuterBrackets(exp);
 
         if (debug) {
             System.out.printf("exp(%d) : %s\n", runCallCount, exp);
@@ -94,51 +83,41 @@ public class Calc {
         throw new RuntimeException("해석 불가 : 올바른 계산식이 아니야");
     }
 
-    private static int isCaseMinusBrackets(String exp) {
-        int index = CaseMinusBracketsIndex(exp);
+    private static String changeMinusBracket(String exp, int startPos, int endPos) {
+        String head = exp.substring(0, startPos);
+        String body = "(" + exp.substring(startPos + 1, endPos + 1) + " * -1)";
+        String tail = exp.substring(endPos + 1);
 
-        return index;
+        exp = head + body + tail;
+
+        return exp;
     }
 
-    private static int CaseMinusBracketsIndex(String exp) {
+    private static int[] findCaseMinusBracket(String exp) {
+        for (int i = 0; i < exp.length() - 1; i++) {
+            if (exp.charAt(i) == '-' && exp.charAt(i + 1) == '(') {
+                // 발견
 
-        for(int i = 0; i < exp.length(); i++) {
-            if(exp.charAt(i) == '-' && exp.charAt(i+1) == '(') {
-                return i;
+                int bracketsCount = 1;
+
+                for (int j = i + 2; j < exp.length(); j++) {
+                    char c = exp.charAt(j);
+
+                    if (c == '(') {
+                        bracketsCount++;
+                    } else if (c == ')') {
+                        bracketsCount--;
+                    }
+
+                    if (bracketsCount == 0) {
+                        return new int[]{i, j};
+                    }
+                }
             }
         }
-        return exp.length();
+
+        return null;
     }
-
-
-
-
-
-    private static boolean isCaseMinusBracket(String exp) {
-        // -( 로 시작하는지? ->  포함하는지
-
-        // - 인데스 위치 확인 후 + 1
-        // bracketsCount
-        if (exp.contains("-(") == false) return false;
-
-        // 괄호로 감싸져 있는지?
-        int bracketsCount = 0;
-
-        for (int i = 0; i < exp.length(); i++) {
-            char c = exp.charAt(i);
-
-            if (c == '(') {
-                bracketsCount++;
-            } else if (c == ')') {
-                bracketsCount--;
-            }
-            if (bracketsCount == 0) {
-                if (exp.length() - 1 != i) return true;
-            }
-        }
-        return false;
-    }
-
 
     private static int findSplitPointIndex(String exp) {
         int index = findSplitPointIndexBy(exp, '+');
@@ -166,20 +145,26 @@ public class Calc {
     }
 
     private static String stripOuterBrackets(String exp) {
-        int outerBracketsCount = 0;
+        if (exp.charAt(0) == '(' && exp.charAt(exp.length() - 1) == ')') {
+            int bracketsCount = 0;
 
-        while (exp.charAt(outerBracketsCount) == '(' && exp.charAt(exp.length() - 1 - outerBracketsCount) == ')') {
-            outerBracketsCount++;
+            for (int i = 0; i < exp.length(); i++) {
+                if (exp.charAt(i) == '(') {
+                    bracketsCount++;
+                } else if (exp.charAt(i) == ')') {
+                    bracketsCount--;
+                }
+
+                if (bracketsCount == 0) {
+                    if (exp.length() == i + 1) {
+                        return stripOuterBrackets(exp.substring(1, exp.length() - 1));
+                    }
+
+                    return exp;
+                }
+            }
         }
 
-        if (outerBracketsCount == 0) return exp;
-
-        return exp.substring(outerBracketsCount, exp.length() - outerBracketsCount);
+        return exp;
     }
 }
-
-// CaseMinusBracketsIndex, isCaseMinusBrackets 함수를 만들어서 -(의 인덱스 위치를 알고자 하였고,
-// split 함수를 사용했을 때를 생각하여 String 값에 -( 앞의 - 제거하고 마지막 뒤의 (8 + 2) * -1 로 붙였다.
-// 이것 또한 잘 실행되는 것처럼 보였지만, solution(1)과 같은 문제 발생
-// -(7 + 3)도 같이 계산을 잘 되었지만 -(8 + 2) * -(7 + 3)이 계산되기전 -(7 + 3) + 5이 먼저 계산되서
-// 실행결과가 105가 아닌 50이 나왔다...
