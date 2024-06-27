@@ -51,6 +51,18 @@ public class Calc_my_Tests {
         assertThat(Calc_my.execute("(1 + 4)")).isEqualTo(5);
     }
 
+    @Test
+    @DisplayName("(1 * 4) == 4")
+    void t8() {
+        assertThat(Calc_my.execute("(1 * 4)")).isEqualTo(4);
+    }
+
+
+    @Test
+    @DisplayName("(2 + 4) + 2 == 8")
+    void t10() {
+        assertThat(Calc_my.execute("(2 + 4) + 2")).isEqualTo(8);
+    }
 
 
 

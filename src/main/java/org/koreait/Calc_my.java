@@ -75,7 +75,7 @@ public class Calc_my {
             }
         }
 
-        String str = pur.substring(firstBracket + 1, lastBracket);
+        String str = pur.substring(firstBracket + 1, lastBracket) + pur.substring(lastBracket + 1);
 
 
 
