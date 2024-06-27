@@ -20,5 +20,13 @@ public class Calc_my_Tests {
         assertThat(Calc_my.execute("1 + 2 + 3")).isEqualTo(6);
     }
 
+    @Test
+    @DisplayName("1 + 2 - 3 == 0")
+    void t3() {
+        assertThat(Calc_my.execute("1 + 2 - 3")).isEqualTo(0);
+    }
+
+
+
 
 }
