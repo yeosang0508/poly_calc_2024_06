@@ -9,6 +9,10 @@ public class Calc {
     public static int runCallCount = 0;
 
     public static int run(String exp) {
+        return _run(exp, 0);
+    }
+
+    public static int _run(String exp, int depth) {
         runCallCount++;
 
         exp = exp.trim(); // 양 옆의 쓸데없는 공백 제거
@@ -24,6 +28,7 @@ public class Calc {
         exp = stripOuterBrackets(exp);
 
         if (debug) {
+            System.out.print(" ".repeat(depth * 4));
             System.out.printf("exp(%d) : %s\n", runCallCount, exp);
         }
 
@@ -38,6 +43,7 @@ public class Calc {
         boolean needToCompound = needToMulti && needToPlus;
 
         if (needToSplit) {
+            exp = exp.replaceAll("- ", "+ -");
             int splitPointIndex = findSplitPointIndex(exp);
 
             String firstExp = exp.substring(0, splitPointIndex);
@@ -45,15 +51,18 @@ public class Calc {
 
             char operator = exp.charAt(splitPointIndex);
 
-            exp = Calc.run(firstExp) + " " + operator + " " + Calc.run(secondExp);
+            exp = Calc._run(firstExp, depth + 1) + " " + operator + " " + Calc._run(secondExp, depth + 1);
 
-            return Calc.run(exp);
+            return Calc._run(exp, depth + 1);
         } else if (needToCompound) {
             String[] bits = exp.split(" \\+ ");
 
-            String newExp = Arrays.stream(bits).mapToInt(Calc::run).mapToObj(e -> e + "").collect(Collectors.joining(" + "));
+            String newExp = Arrays.stream(bits)
+                    .mapToInt(e -> Calc._run(e, depth + 1))
+                    .mapToObj(e -> e + "")
+                    .collect(Collectors.joining(" + "));
 
-            return run(newExp);
+            return _run(newExp, depth + 1);
         }
 
         if (needToPlus) {
