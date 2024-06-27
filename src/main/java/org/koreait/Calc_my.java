@@ -9,8 +9,9 @@ public class Calc_my {
 
             String[] total = pur.split(" \\+ ");
 
-            sum = Integer.parseInt(total[0]) + Integer.parseInt(total[1]);
-
+            for(int i = 0; i < total.length; i++){
+                sum += Integer.parseInt(total[i]);
+            }
         }
 
         return sum;
