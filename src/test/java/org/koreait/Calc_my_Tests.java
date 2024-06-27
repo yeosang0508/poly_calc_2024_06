@@ -26,7 +26,17 @@ public class Calc_my_Tests {
         assertThat(Calc_my.execute("1 + 2 - 3")).isEqualTo(0);
     }
 
+    @Test
+    @DisplayName("3 * 1 == 3")
+    void t4() {
+        assertThat(Calc_my.execute("3 * 1")).isEqualTo(3);
+    }
 
+    @Test
+    @DisplayName("3 * 1 * 4 == 12")
+    void t5() {
+        assertThat(Calc_my.execute("3 * 1 * 4")).isEqualTo(12);
+    }
 
 
 }
