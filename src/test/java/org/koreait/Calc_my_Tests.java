@@ -64,6 +64,19 @@ public class Calc_my_Tests {
         assertThat(Calc_my.execute("(2 + 4) + 2")).isEqualTo(8);
     }
 
+    @Test
+    @DisplayName("(2 + 4) * 2 == 12")
+    void t11() {
+        assertThat(Calc_my.execute("(2 + 4) * 2")).isEqualTo(12);
+    }
+
+
+    @Test
+    @DisplayName("8 * (4 - 9) == -40")
+    void t12() {
+        assertThat(Calc_my.execute("8 * (4 - 9)")).isEqualTo(-40);
+    }
+
 
 
 }

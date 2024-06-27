@@ -11,7 +11,7 @@ public class Calc_my {
 
         boolean bracket = pur.contains("(") && pur.contains(")");
         boolean mult = pur.contains(" * ");
-        boolean plus = pur.contains(" + ");
+        boolean plus = pur.contains(" + ") || pur.contains(" - ");
         boolean multPlus = pur.contains(" * ") && pur.contains(" + ");
 
         if (bracket) {
@@ -75,7 +75,13 @@ public class Calc_my {
             }
         }
 
-        String str = pur.substring(firstBracket + 1, lastBracket) + pur.substring(lastBracket + 1);
+        if(firstBracket != 0) {
+            String str = pur.substring(0, firstBracket) + Calc_my.execute(pur.substring(firstBracket + 1, lastBracket));
+
+            return Calc_my.execute(str);
+        }
+
+        String str = Calc_my.execute(pur.substring(firstBracket + 1, lastBracket)) + pur.substring(lastBracket + 1);
 
 
 
