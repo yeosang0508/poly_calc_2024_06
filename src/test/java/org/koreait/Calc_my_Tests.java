@@ -91,8 +91,16 @@ public class Calc_my_Tests {
     }
 
     @Test
-    @DisplayName("3 * 1 + (1 - (4 * 1 - (1 - 1))) == 0")
+    @DisplayName("(6 - (4 * 1 - (1 - 1))) == 2")
     void t15() {
+        assertThat(Calc_my.execute("(6 - (4 * 1 - (1 - 1)))")).isEqualTo(2);
+    }
+
+
+
+    @Test
+    @DisplayName("3 * 1 + (1 - (4 * 1 - (1 - 1))) == 0")
+    void t16() {
         assertThat(Calc_my.execute("3 * 1 + (1 - (4 * 1 - (1 - 1)))")).isEqualTo(0);
     }
 

@@ -1,17 +1,26 @@
 package org.koreait;
 
+import static org.koreait.Calc.runCallCount;
+
 public class Calc_my {
+
+    public static boolean debug = true;
 
     public static int execute(String pur) {
         int sum = 0;
+
+        if (debug) {
+            System.out.printf("exp(%d) : %s\n", runCallCount, pur);
+        }
 
         if (!pur.contains(" ")) {
             return Integer.parseInt(pur);
         }
 
         boolean bracket = pur.contains("(") && pur.contains(")");
+        boolean changeplus = pur.contains(" - ");
         boolean mult = pur.contains(" * ");
-        boolean plus = pur.contains(" + ") || pur.contains(" - ");
+        boolean plus = pur.contains(" + ");
         boolean multPlus = pur.contains(" * ") && pur.contains(" + ");
 
         if (bracket) {
@@ -29,6 +38,10 @@ public class Calc_my {
             return sum;
 
         }
+        if(changeplus){
+            pur = pur.replaceAll(" - ", " + -");
+            return Calc_my.execute(pur);
+        }
 
         if (mult) {
             sum = 1;
@@ -44,8 +57,6 @@ public class Calc_my {
         }
 
         if (plus) {
-            pur = pur.replaceAll(" - ", " + -");
-
             String[] total = pur.split(" \\+ ");
 
             for (int i = 0; i < total.length; i++) {
@@ -82,7 +93,6 @@ public class Calc_my {
         }
 
         String str = Calc_my.execute(pur.substring(firstBracket + 1, lastBracket)) + pur.substring(lastBracket + 1);
-
 
 
         return Calc_my.execute(str);
