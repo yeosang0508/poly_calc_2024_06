@@ -4,7 +4,7 @@ import static org.koreait.Calc.runCallCount;
 
 public class Calc_my {
 
-    public static boolean debug = true;
+    public static boolean debug = false;
 
     public static int execute(String pur) {
         int sum = 0;
@@ -66,7 +66,7 @@ public class Calc_my {
             return sum;
         }
 
-        throw new RuntimeException("해석 불가");
+        throw new RuntimeException("해석불가");
     }
 
     static int bracketIndex(String pur){
